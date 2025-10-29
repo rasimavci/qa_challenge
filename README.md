@@ -1,2 +1,74 @@
-# qa_challenge
-QA Tests for .NET Project
+# qa\_challenge
+
+QA challenge with CSharp
+
+This C# project is a Transaction Management Web API with a layered architecture with Entity Framework and AutoMapper.
+
+## Layers
+
+WebApi
+Service
+Data layers
+
+### Added new unit tests Transaction service
+
+
+
+Pagination \& Data Retrieval Tests:
+
+Test 12: GetTransactions with specific page number and page size
+
+Test 13: GetTransactions when page number exceeds available data (returns empty)
+
+Test 14: GetHighVolumeTransactions with threshold filtering verification
+
+Test 15: GetHighVolumeTransactions with extremely high threshold (returns empty)
+
+
+
+added
+
+
+
+Error Handling \& Edge Cases:
+
+Test 16: AddTransaction exception handling when factory throws errors
+
+
+
+Test 17: GetTransactionById with zero transaction ID (returns null)
+
+
+
+Test 18: GetTransactionById with negative transaction ID (returns null)
+
+
+
+Test 19: UpdateTransaction exception handling when factory throws errors
+
+
+
+Test 20: DeleteTransaction with zero transaction ID (returns false)
+
+
+
+Test 21: DeleteTransaction with negative transaction ID (returns false)
+
+
+
+
+
+### Added new unit tests for Transaction summary service
+
+
+
+Data Grouping \& Aggregation Tests:
+
+Test 53: GetTransactionsByTransactionType correct grouping (Debit/Credit card groups)
+
+
+
+Test 54: GetTransactionsByUser correct grouping (5 users: TestUser1-5)
+
+
+
