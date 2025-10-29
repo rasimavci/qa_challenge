@@ -1,16 +1,16 @@
-# qa\_challenge
+\# qa\_challenge
 
-QA challenge with CSharp
+QA challenge with for .NET project with C#
 
 This C# project is a Transaction Management Web API with a layered architecture with Entity Framework and AutoMapper.
 
-## Layers
+\## Layers
 
 WebApi
 Service
 Data layers
 
-### Added new unit tests Transaction service
+\## Added new unit tests Transaction service
 
 
 
@@ -58,7 +58,7 @@ Test 21: DeleteTransaction with negative transaction ID (returns false)
 
 
 
-### Added new unit tests for Transaction summary service
+\## Added new unit tests for Transaction summary service
 
 
 
@@ -69,6 +69,34 @@ Test 53: GetTransactionsByTransactionType correct grouping (Debit/Credit card gr
 
 
 Test 54: GetTransactionsByUser correct grouping (5 users: TestUser1-5)
+
+## Added Load Tests
+Added 2 load test with automatic fallback to mock data if API is unavailable
+Simulated network latency in mock mode (10ms and 5ms respectively)
+
+Validate Response times
+
+&nbsp;	
+
+Name: "Get Transactions Test"
+
+Rate: 10 requests/second (Normal load)
+
+Duration: 30 seconds
+
+No warmup
+
+
+
+Name: "Get Transaction By Id Test"
+
+Rate: 5 requests/second (Peak load)
+
+Duration: 30 seconds
+
+No warmup
+
+
 
 
 
