@@ -30,13 +30,3 @@ namespace CodingChallenge.Service.UnitTests
         }
     }
 }
-
-namespace CodingChallenge.Data.DataModels
-{
-    public class UserDataModel
-    {
-        public int Id { get; set; }
-        public string UserName { get; set; }
-        // Add other properties as needed
-    }
-}
