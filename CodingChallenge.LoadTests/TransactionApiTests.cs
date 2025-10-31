@@ -108,6 +108,77 @@ public class TransactionApiTests : IDisposable
         );
     }
 
+    private NBomber.Contracts.ScenarioProps CreateAddTransactionTest()
+    {
+        return Scenario.Create("Add Transaction Test", async context =>
+        {
+            try
+            {
+                if (_useMockData)
+                {
+                    await Task.Delay(10);
+                    return Response.Ok();
+                }
+
+                var addTransactionDto = new TransactionDto
+                {
+                    TransactionAmount = 100 + context.InvocationCount,
+                    TransactionType = TransactionTypes.Debit,
+                    UserId = $"User{context.InvocationCount}",
+                    TransactionCreatedAt = DateTime.UtcNow
+                };
+                var request = Http.CreateRequest("POST", "/api/transactions").WithJsonBody(addTransactionDto);
+                var response = await Http.Send(_client, request);
+                return Response.Ok(response);
+            }
+            catch (Exception ex)
+            {
+                context.Logger.Error(ex, "Failed to execute Add Transaction test");
+                return Response.Fail();
+            }
+        })
+        .WithoutWarmUp()
+        .WithLoadSimulations(
+            Simulation.Inject(
+                rate: GetConfiguredRate("Normal"),
+                interval: TimeSpan.FromSeconds(1),
+                during: GetConfiguredDuration()
+            )
+        );
+    }
+
+    private NBomber.Contracts.ScenarioProps CreateGetHighVolumeTransactionsTest()
+    {
+        return Scenario.Create("Get High Volume Transactions Test", async context =>
+        {
+            try
+            {
+                if (_useMockData)
+                {
+                    await Task.Delay(10);
+                    return Response.Ok(CreateMockTransactionsList().Where(t => t.TransactionAmount > 100));
+                }
+
+                var request = Http.CreateRequest("GET", "/api/transactions/HighVolumeTransactions/100");
+                var response = await Http.Send(_client, request);
+                return Response.Ok(response);
+            }
+            catch (Exception ex)
+            {
+                context.Logger.Error(ex, "Failed to execute Get High Volume Transactions test");
+                return Response.Fail();
+            }
+        })
+        .WithoutWarmUp()
+        .WithLoadSimulations(
+            Simulation.Inject(
+                rate: GetConfiguredRate("Normal"),
+                interval: TimeSpan.FromSeconds(1),
+                during: GetConfiguredDuration()
+            )
+        );
+    }
+
     private int GetConfiguredRate(string loadType)
     {
         try
@@ -154,10 +225,12 @@ public class TransactionApiTests : IDisposable
 
     public void RunLoadTest()
     {
-var scenarios = new[]
+ var scenarios = new[]
         {
             CreateGetTransactionsTest(),
-       CreateGetTransactionByIdTest()
+       CreateGetTransactionByIdTest(),
+       CreateAddTransactionTest(),
+       CreateGetHighVolumeTransactionsTest()
         };
 
         NBomberRunner

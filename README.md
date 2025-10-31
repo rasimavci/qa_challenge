@@ -1,16 +1,16 @@
-\# qa\_challenge
+# qa\_challenge
 
 QA challenge with for .NET project with C#
 
 This C# project is a Transaction Management Web API with a layered architecture with Entity Framework and AutoMapper.
 
-\## Layers
+## Layers
 
 WebApi
 Service
 Data layers
 
-\## Added new unit tests Transaction service
+## Added new unit tests Transaction Service
 
 
 
@@ -30,7 +30,7 @@ added
 
 
 
-Error Handling \& Edge Cases:
+## Error Handling \& Edge Cases:
 
 Test 16: AddTransaction exception handling when factory throws errors
 
@@ -55,14 +55,11 @@ Test 20: DeleteTransaction with zero transaction ID (returns false)
 Test 21: DeleteTransaction with negative transaction ID (returns false)
 
 
+## Added new unit tests for Transaction summary service
 
 
 
-\## Added new unit tests for Transaction summary service
-
-
-
-Data Grouping \& Aggregation Tests:
+## Data Grouping \& Aggregation Tests:
 
 Test 53: GetTransactionsByTransactionType correct grouping (Debit/Credit card groups)
 
@@ -70,7 +67,7 @@ Test 53: GetTransactionsByTransactionType correct grouping (Debit/Credit card gr
 
 Test 54: GetTransactionsByUser correct grouping (5 users: TestUser1-5)
 
-\## Added Load Tests
+## Added Load Tests
 
 Added 2 load test with automatic fallback to mock data if API is unavailable
 Simulated network latency in mock mode (10ms and 5ms respectively)
@@ -78,8 +75,6 @@ Simulated network latency in mock mode (10ms and 5ms respectively)
 Validate Response times
 
  
-
-"
 
 Rate: 10 requests/second (Normal load)
 
@@ -97,6 +92,8 @@ Duration: 30 seconds
 
 No warmup
 
+- Transaction Test (POST)
+- High Volume Transactions Test (GET with threshold)
 
 
 ## Added User data base model
@@ -146,6 +143,8 @@ public class UserDataModel : BaseDataModel
 
 
 
-
+### API Tests improved
+- covered in InvokingGetTransactionsApiEndPoint_ShouldReturnDataIntegrity
+- Send a transaction before calling the GET endpoint in this test. (This ensures the endpoint returns data)
 
 

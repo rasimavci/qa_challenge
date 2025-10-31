@@ -42,6 +42,9 @@ namespace CodingChallenge.WebApi.IntegrationTests.Controllers
 
                 string responseData = await httpResponseMessage.Content.ReadAsStringAsync();
                 responseData.Should().NotBeNullOrWhiteSpace();
+                int transactionId;
+                int.TryParse(responseData, out transactionId).Should().BeTrue();
+                transactionId.Should().BeGreaterThan(0);
             }
         }
 
@@ -288,6 +291,45 @@ namespace CodingChallenge.WebApi.IntegrationTests.Controllers
                 IEnumerable<TransactionByUserDto>? transactionByUserDtos = JsonSerializer.Deserialize<IEnumerable<TransactionByUserDto>?>(responseData, jsonSerializerOptions);
                 transactionByUserDtos.Should().NotBeNull();
                 transactionByUserDtos.Should().NotBeEmpty();
+            }
+        }
+
+        [Fact]
+        public async Task InvokingGetTransactionsApiEndPoint_ShouldReturnDataIntegrity()
+        {
+            // Arrange
+            // Ensure at least one transaction exists
+            var addTransactionDto = new AddOrUpdateTransactionDto
+            {
+                TransactionAmount =1000,
+                TransactionType = TransactionTypes.Debit,
+                UserId = "TestUser1"
+            };
+            var response = await base.HttpClient.PostAsJsonAsync(ApiEndpoints.AddTransaction, addTransactionDto);
+            response.EnsureSuccessStatusCode();
+
+            string requestUri = ApiEndpoints.GetTransactions;
+            HttpResponseMessage httpResponseMessage = await base.HttpClient.GetAsync(requestUri);
+
+            // Assert
+            using (new AssertionScope())
+            {
+                httpResponseMessage.Should().NotBeNull();
+                httpResponseMessage.StatusCode.Should().Be(HttpStatusCode.OK);
+
+                string responseData = await httpResponseMessage.Content.ReadAsStringAsync();
+                responseData.Should().NotBeNullOrWhiteSpace();
+
+                var transactionDtos = JsonSerializer.Deserialize<List<TransactionDto>>(responseData, jsonSerializerOptions);
+                transactionDtos.Should().NotBeNull();
+                transactionDtos.Should().NotBeEmpty();
+                foreach (var dto in transactionDtos!)
+                {
+                    dto.TransactionId.Should().BeGreaterThan(0);
+                    dto.TransactionAmount.Should().BeGreaterThan(0);
+                    dto.UserId.Should().NotBeNullOrWhiteSpace();
+                    Enum.IsDefined(typeof(TransactionTypes), dto.TransactionType).Should().BeTrue();
+                }
             }
         }
     }
