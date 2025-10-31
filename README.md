@@ -69,11 +69,17 @@ Test 54: GetTransactionsByUser correct grouping (5 users: TestUser1-5)
 
 ## Added Load Tests
 
-Added 2 load test with automatic fallback to mock data if API is unavailable
+Added 4 load test with automatic fallback to mock data if API is unavailable
+
+- Get Transactions Test
+- Get Transaction By Id Test
+- Add Transaction Test (POST)
+- Get High Volume Transactions Test (GET with threshold)
+
 Simulated network latency in mock mode (10ms and 5ms respectively)
 
 Validate Response times
-
+Run with dotnet run --project CodingChallenge.LoadTests
  
 
 Rate: 10 requests/second (Normal load)
@@ -92,8 +98,7 @@ Duration: 30 seconds
 
 No warmup
 
-- Transaction Test (POST)
-- High Volume Transactions Test (GET with threshold)
+
 
 
 ## Added User data base model

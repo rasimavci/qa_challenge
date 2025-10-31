@@ -120,14 +120,15 @@ public class TransactionApiTests : IDisposable
                     return Response.Ok();
                 }
 
-                var addTransactionDto = new TransactionDto
+                var addTransactionDto = new AddOrUpdateTransactionDto
                 {
-                    TransactionAmount = 100 + context.InvocationCount,
+                    TransactionAmount =100 + Random.Shared.Next(1,10000),
                     TransactionType = TransactionTypes.Debit,
-                    UserId = $"User{context.InvocationCount}",
-                    TransactionCreatedAt = DateTime.UtcNow
+                    UserId = $"User{Guid.NewGuid()}"
                 };
-                var request = Http.CreateRequest("POST", "/api/transactions").WithJsonBody(addTransactionDto);
+                var json = System.Text.Json.JsonSerializer.Serialize(addTransactionDto);
+                var request = Http.CreateRequest("POST", "/api/transactions")
+ .WithBody(new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
                 var response = await Http.Send(_client, request);
                 return Response.Ok(response);
             }
@@ -187,7 +188,7 @@ public class TransactionApiTests : IDisposable
         }
  catch
         {
-         return loadType == "Normal" ? 10 : 5; // Default values
+         return loadType == "Normal" ? 10 : 5;
  }
     }
 
@@ -200,7 +201,7 @@ public class TransactionApiTests : IDisposable
    }
         catch
         {
-            return TimeSpan.FromSeconds(30); // Default duration
+            return TimeSpan.FromSeconds(30);
       }
     }
 
