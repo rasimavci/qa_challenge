@@ -118,9 +118,31 @@ public class UserDataModel : BaseDataModel
 }
 ```
 
+### Testing Complex Logic Operations
 
+#### Total Amount Per User
+- covered in TransactionSummaryServiceUnitTests with tests for GetTransactionsByUser
 
+#### Total Amount Per Transaction Type
+- covered in TransactionSummaryServiceUnitTests with tests for GetTransactionsByTransactionType
 
+### Testing Transaction
+
+#### High-Volume Transactions
+- covered in TransactionServiceUnitTests with tests for GetHighVolumeTransactions
+
+#### Total transaction amount per user is correct
+- covered in GetTransactionsByUser_ShouldReturnCorrectSumsPerUser (verifies explicit sum for each user)
+
+#### Total transaction amount per transaction type is correct
+- covered in GetTransactionsByTransactionType_ShouldReturnCorrectSumsPerType (verifies explicit sum for each type)
+
+####  Add Transaction:
+- covered in CallingAddTransactionMethod_ShouldTransactionIdOfNewelyAddedTransaction (verifies insertion and returned ID)
+
+####  Fetch Transactions:
+- covered in CallingGetTransactionsMethod_ShouldReturnMappedCollection_WhenTransactionDataIsAvailable (verifies retrieval)
+- covered in CallingGetTransactionsMethod_ShouldReturnEmptyCollection_WhenNoTransactionDataAvailable (verifies empty result)
 
 
 

@@ -112,7 +112,47 @@ namespace CodingChallenge.Service.UnitTests
             }
         }
 
+        [Fact]
+        public async Task GetTransactionsByUser_ShouldReturnCorrectSumsPerUser()
+        {
+            // Arrange
+            CancellationTokenSource tokenSource = new();
+            await SeedDataForTests();
 
+            // Act
+            var userSums = (await _transactionSummaryServiceUnderTest.GetTransactionsByUser(tokenSource.Token)).ToList();
+
+            // Assert: check explicit sum for each user
+            userSums.Should().NotBeEmpty();
+            foreach (var userGroup in userSums)
+            {
+                var expectedSum = _codingChallengeDbContext.Transactions
+                    .Where(t => t.UserId == userGroup.UserId)
+                    .Sum(t => t.Amount);
+                userGroup.TotalTransactionAmount.Should().Be(expectedSum);
+            }
+        }
+
+        [Fact]
+        public async Task GetTransactionsByTransactionType_ShouldReturnCorrectSumsPerType()
+        {
+            // Arrange
+            CancellationTokenSource tokenSource = new();
+            await SeedDataForTests();
+
+            // Act
+            var typeSums = (await _transactionSummaryServiceUnderTest.GetTransactionsByTransactionType(tokenSource.Token)).ToList();
+
+            // Assert: check explicit sum for each type
+            typeSums.Should().NotBeEmpty();
+            foreach (var typeGroup in typeSums)
+            {
+                var expectedSum = _codingChallengeDbContext.Transactions
+                    .Where(t => t.TransactionType == typeGroup.TransactionType)
+                    .Sum(t => t.Amount);
+                typeGroup.TotalTransactionAmount.Should().Be(expectedSum);
+            }
+        }
 
 
 
