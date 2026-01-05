@@ -6,9 +6,9 @@ This C# project for testing of a Transaction Management Web API with a layered a
 
 ## Layers
 
-WebApi
-Service
-Data layers
+- WebApi
+- Service
+- Data layers
 
 ## Added new unit tests Transaction Service
 
@@ -27,36 +27,21 @@ Test 15: GetHighVolumeTransactions with extremely high threshold (returns empty)
 
 Test 16: AddTransaction exception handling when factory throws errors
 
-
-
 Test 17: GetTransactionById with zero transaction ID (returns null)
-
-
 
 Test 18: GetTransactionById with negative transaction ID (returns null)
 
-
-
 Test 19: UpdateTransaction exception handling when factory throws errors
-
-
 
 Test 20: DeleteTransaction with zero transaction ID (returns false)
 
-
-
 Test 21: DeleteTransaction with negative transaction ID (returns false)
 
-
 ## Added new unit tests for Transaction summary service
-
-
 
 ## Data Grouping \& Aggregation Tests:
 
 Test 53: GetTransactionsByTransactionType correct grouping (Debit/Credit card groups)
-
-
 
 Test 54: GetTransactionsByUser correct grouping (5 users: TestUser1-5)
 
@@ -74,13 +59,11 @@ Simulated network latency in mock mode (10ms and 5ms respectively)
 Validate Response times
 Run with dotnet run --project CodingChallenge.LoadTests
  
-
 Rate: 10 requests/second (Normal load)
 
 Duration: 30 seconds
 
 No warmup
-
 
 
 Name: "Get Transaction By Id Test"
@@ -90,9 +73,6 @@ Rate: 5 requests/second (Peak load)
 Duration: 30 seconds
 
 No warmup
-
-
-
 
 ## Added User data base model
 UserDataModel
@@ -104,11 +84,11 @@ public class UserDataModel : BaseDataModel
 
 {
 
-&nbsp;   public required int Id { get; set; }
+public required int Id { get; set; }
 
-&nbsp;   public required DateTime CreatedAt { get; set; }
+public required DateTime CreatedAt { get; set; }
 
-&nbsp;   public string? DateTime { get; set; }
+public string? DateTime { get; set; }
 
 }
 ```
