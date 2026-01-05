@@ -1,8 +1,8 @@
-# qa\_challenge
+# Transaction Management
 
-QA challenge with for .NET project with C#
+Transaction Management Unit Test with for .NET project with C#
 
-This C# project is a Transaction Management Web API with a layered architecture with Entity Framework and AutoMapper.
+This C# project for testing of a Transaction Management Web API with a layered architecture with Entity Framework and AutoMapper.
 
 ## Layers
 
@@ -11,8 +11,6 @@ Service
 Data layers
 
 ## Added new unit tests Transaction Service
-
-
 
 Pagination \& Data Retrieval Tests:
 
@@ -23,11 +21,6 @@ Test 13: GetTransactions when page number exceeds available data (returns empty)
 Test 14: GetHighVolumeTransactions with threshold filtering verification
 
 Test 15: GetHighVolumeTransactions with extremely high threshold (returns empty)
-
-
-
-added
-
 
 
 ## Error Handling \& Edge Cases:
@@ -151,5 +144,3 @@ public class UserDataModel : BaseDataModel
 ### API Tests improved
 - covered in InvokingGetTransactionsApiEndPoint_ShouldReturnDataIntegrity
 - Send a transaction before calling the GET endpoint in this test. (This ensures the endpoint returns data)
-
-
